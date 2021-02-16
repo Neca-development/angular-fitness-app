@@ -1,21 +1,29 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
+import jwtDecode from 'jwt-decode';
+import { User } from '../models/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SessionService {
-  user: {};
+  user: User;
 
   constructor() {
-    this.user = this.request('/user', 'GET');
-    console.log(this.user);
+    const token = localStorage.getItem('token');
+    if (token) this.user = jwtDecode(token);
   }
 
   async logIn(user) {
-    const data = await this.request('/api/auth', 'POST', user);
-    localStorage.setItem('token', data.token);
-    this.user = data;
+    try {
+      const data = await this.request('/api/auth', 'POST', user);
+      localStorage.setItem('token', data.token);
+      this.user = data;
+      return data;
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
   }
 
   async request(url, method = 'GET', data = null) {
@@ -31,6 +39,8 @@ export class SessionService {
       headers,
       body,
     });
+    if (response.status >= 400 && response.status <= 599)
+      throw new Error(`Http exeption code: ${response.status}`);
     return await response.json();
   }
 }

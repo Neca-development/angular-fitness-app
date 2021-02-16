@@ -1,1 +1,6 @@
-<p>user works!</p>
+<div class="" *ngIf="userIsActive">
+  <h1>
+    {{ userInfo.surname + " " + userInfo.name + " " + userInfo.middleName }}
+  </h1>
+  <h2>Фишки: {{ userInfo.coins }}</h2>
+</div>
