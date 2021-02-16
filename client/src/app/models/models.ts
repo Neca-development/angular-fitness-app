@@ -11,3 +11,9 @@ export interface UserInfo {
   middleName: string;
   coins: string;
 }
+
+export interface Abonemets {
+  userId: number;
+  startDate: string;
+  endDate: string;
+}

@@ -1,35 +1,19 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import jwtDecode from 'jwt-decode';
-import { User } from '../models/models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SessionService {
-  user: User;
+export class AbonemetsService {
+  token: string = localStorage.getItem('token');
+  constructor() {}
 
-  constructor(private router: Router) {
-    const token = localStorage.getItem('token');
-    if (token) this.user = jwtDecode(token);
-  }
-
-  async logIn(user) {
+  async getAbonemetsInfo() {
     try {
-      const data = await this.request('/api/auth', 'POST', user);
-      localStorage.setItem('token', data.token);
-      this.user = data;
+      const data = await this.request('/abonemets/getinfo');
       return data;
     } catch (e) {
-      console.log(e);
-      throw e;
+      return e;
     }
-  }
-
-  logOut() {
-    localStorage.removeItem('token');
-    this.router.navigateByUrl('/');
   }
 
   async request(url, method = 'GET', data = null) {

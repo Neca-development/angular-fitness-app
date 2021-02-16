@@ -2,8 +2,9 @@ const express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     jwt = require('jsonwebtoken'),
-    users = require('./users'),
-    usersInfo = require('./usersInfo'),
+    users = require('./data/users'),
+    abonements = require('./data/abonements'),
+    usersInfo = require('./data/usersInfo'),
     path = require('path')
 const host = '127.0.0.1'
 const port = process.env.PORT || 7000
@@ -71,6 +72,33 @@ app.get('/user/getinfo', (req, res) => {
                 }
                 else if (payload) {
                     for (let user of usersInfo) {
+                        if (user.userId === payload.id) {
+                            return res.status(200).json(user)
+                        }
+                    }
+
+                    if (!req.user) console.error('err')
+                }
+            }
+        )
+    }
+    else
+        return res
+            .status(401)
+            .json({ message: 'Not authorized' })
+})
+
+app.get('/abonemets/getinfo', (req, res) => {
+    if (req.headers.authorization) {
+        jwt.verify(
+            req.headers.authorization,
+            tokenKey,
+            (err, payload) => {
+                if (err) {
+                    console.error(err)
+                }
+                else if (payload) {
+                    for (let user of abonements) {
                         if (user.userId === payload.id) {
                             return res.status(200).json(user)
                         }

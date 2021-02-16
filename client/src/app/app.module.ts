@@ -11,6 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthComponent } from './auth/auth.component';
 import { FormsModule } from '@angular/forms';
 import { UserComponent } from './user/user.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [AppComponent, AuthComponent, UserComponent],
@@ -22,6 +24,8 @@ import { UserComponent } from './user/user.component';
     MatIconModule,
     MatInputModule,
     MatButtonModule,
+    MatSnackBarModule,
+    MatProgressBarModule,
     FormsModule,
   ],
   providers: [],

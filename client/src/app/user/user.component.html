@@ -3,4 +3,12 @@
     {{ userInfo.surname + " " + userInfo.name + " " + userInfo.middleName }}
   </h1>
   <h2>Фишки: {{ userInfo.coins }}</h2>
+  <div class="">
+    <span>Абоненмент:</span>
+    <mat-progress-bar [value]="abonementsVal" [color]="progressColor">
+    </mat-progress-bar>
+  </div>
+  <button mat-raised-button color="primary" type="submit" (click)="logOut()">
+    Выйти
+  </button>
 </div>
