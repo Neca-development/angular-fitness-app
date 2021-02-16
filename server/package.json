@@ -1,0 +1,78 @@
+{
+  "name": "jsninja-jwt-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "better-npm-run test",
+    "lint": "eslint src tests",
+    "precommit": "lint-staged"
+  },
+  "betterScripts": {
+    "test": {
+      "command": "ava",
+      "env": {
+        "JWT_connection": "./tests/__data",
+        "JWT_secret": "TEST"
+      }
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ]
+  },
+  "keywords": [],
+  "author": "Illya Klymov <illya@javascript.ninja",
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^1.0.0-beta.5.1",
+    "better-npm-run": "^0.1.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.12.0",
+    "express": "^4.17.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
+    "supertest-koa-agent": "^0.3.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.3.0",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-jwt": "^3.3.2",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "lodash": "^4.17.10",
+    "nodemon": "^2.0.7",
+    "rc": "^1.2.8",
+    "uuid": "^3.2.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "prettier"
+    ],
+    "env": {
+      "node": true
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": true
+  },
+  "ava": {
+    "files": [
+      "tests/**/*.js",
+      "!tests/__data/**/*.js",
+      "!tests/helpers/**/*.js"
+    ],
+    "babel": false,
+    "compileEnhancements": false
+  }
+}
