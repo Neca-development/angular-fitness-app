@@ -17,3 +17,24 @@ export interface Abonemets {
   startDate: string;
   endDate: string;
 }
+
+export interface Lesson {
+  [index: number]: string;
+}
+
+export interface Lessons {
+  userId: number;
+  visited: Lesson;
+  missing: Lesson;
+  comming: Lesson;
+}
+
+export interface CalendarDate {
+  year: number;
+  month: number;
+  day: number;
+}
+
+export interface CalendarDatesList {
+  [index: number]: CalendarDate;
+}

@@ -1,14 +1,35 @@
-<div class="" *ngIf="userIsActive">
-  <h1>
-    {{ userInfo.surname + " " + userInfo.name + " " + userInfo.middleName }}
-  </h1>
-  <h2>Фишки: {{ userInfo.coins }}</h2>
-  <div class="">
-    <span>Абоненмент:</span>
-    <mat-progress-bar [value]="abonementsVal" [color]="progressColor">
-    </mat-progress-bar>
+<mat-card class="user" *ngIf="userIsActive">
+  <div class="user__left">
+    <h1>
+      {{ userInfo.surname + " " + userInfo.name + " " + userInfo.middleName }}
+    </h1>
+    <h2>Фишки: {{ userInfo.coins }}</h2>
+    <div class="user__abonement">
+      <span><strong>Абоненмент:</strong></span>
+      <mat-progress-bar
+        class="user__abonement-bar"
+        [value]="abonementsVal"
+        [color]="progressColor"
+      >
+      </mat-progress-bar>
+    </div>
+    <h2>Занятия на этой неделе:</h2>
+    <mat-list>
+      <mat-list-item> Понедельник - 16:20</mat-list-item>
+      <mat-list-item> Четверг - 15:30</mat-list-item>
+      <mat-list-item> Суббота - 14:20</mat-list-item>
+    </mat-list>
+    <button
+      mat-raised-button
+      color="primary"
+      class="user__log-out"
+      type="submit"
+      (click)="logOut()"
+    >
+      Выйти
+    </button>
   </div>
-  <button mat-raised-button color="primary" type="submit" (click)="logOut()">
-    Выйти
-  </button>
-</div>
+  <div class="user__right">
+    <app-user-calendar [lessons]="lessons"></app-user-calendar>
+  </div>
+</mat-card>

@@ -1,36 +1,19 @@
 import { Injectable } from '@angular/core';
+import { BaseRequestService } from './base-request.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AbonemetsService {
   token: string = localStorage.getItem('token');
-  constructor() {}
+  constructor(private baseRequest: BaseRequestService) {}
 
   async getAbonemetsInfo() {
     try {
-      const data = await this.request('/abonemets/getinfo');
+      const data = await this.baseRequest.request('/abonemets/getinfo');
       return data;
     } catch (e) {
       return e;
     }
-  }
-
-  async request(url, method = 'GET', data = null) {
-    const headers = {};
-    headers['authorization'] = localStorage.getItem('token') || '';
-    let body;
-    if (data) {
-      headers['Content-Type'] = 'application/json';
-      body = JSON.stringify(data);
-    }
-    const response = await fetch(`http://127.0.0.1:7000${url}`, {
-      method,
-      headers,
-      body,
-    });
-    if (response.status >= 400 && response.status <= 599)
-      throw new Error(`Http exeption code: ${response.status}`);
-    return await response.json();
   }
 }
