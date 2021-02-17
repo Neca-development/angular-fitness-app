@@ -1,23 +1,10 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SessionService {
-  user: {};
-
-  constructor() {
-    this.user = this.request('/user', 'GET');
-    console.log(this.user);
-  }
-
-  async logIn(user) {
-    const data = await this.request('/api/auth', 'POST', user);
-    localStorage.setItem('token', data.token);
-    this.user = data;
-  }
-
+export class BaseRequestService {
+  constructor() {}
   async request(url, method = 'GET', data = null) {
     const headers = {};
     headers['authorization'] = localStorage.getItem('token') || '';
@@ -31,6 +18,8 @@ export class SessionService {
       headers,
       body,
     });
+    if (response.status >= 400 && response.status <= 599)
+      throw new Error(`Http exeption code: ${response.status}`);
     return await response.json();
   }
 }

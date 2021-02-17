@@ -2,7 +2,10 @@ const express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     jwt = require('jsonwebtoken'),
-    users = require('./users'),
+    users = require('./data/users'),
+    abonements = require('./data/abonements'),
+    lessons = require('./data/lessons'),
+    usersInfo = require('./data/usersInfo'),
     path = require('path')
 const host = '127.0.0.1'
 const port = process.env.PORT || 7000
@@ -14,33 +17,34 @@ const tokenKey = '1a2b-3c4d-5e6f-7g8h'
 app.use(express.json())
 app.use(cors())
 app.use(bodyParser.json())
-app.use((req, res, next) => {
+
+
+function getInfo(req, res, arr) {
     if (req.headers.authorization) {
         jwt.verify(
-            // req.headers.authorization.split(' ')[1],
             req.headers.authorization,
             tokenKey,
             (err, payload) => {
                 if (err) {
-                    next()
+                    console.error(err)
                 }
                 else if (payload) {
-                    console.log(payload);
-                    for (let user of users) {
-                        if (user.id === payload.id) {
-                            req.user = user
-                            next()
+                    for (let user of arr) {
+                        if (user.userId === payload.id) {
+                            return res.status(200).json(user)
                         }
                     }
 
-                    if (!req.user) next()
+                    if (!req.user) console.error('err')
                 }
             }
         )
     }
-
-    next()
-})
+    else
+        return res
+            .status(401)
+            .json({ message: 'Not authorized' })
+}
 
 app.post('/api/auth', (req, res) => {
     for (let user of users) {
@@ -59,13 +63,11 @@ app.post('/api/auth', (req, res) => {
     return res.status(404).json({ message: 'Пользователь не найден' })
 })
 
-app.get('/user', (req, res) => {
-    if (req.user) return res.status(200).json(req.user)
-    else
-        return res
-            .status(401)
-            .json({ message: 'Not authorized' })
-})
+app.get('/user/getinfo', (req, res) => getInfo(req, res, usersInfo))
+
+app.get('/abonemets/getinfo', (req, res) => getInfo(req, res, abonements))
+
+app.get('/lessons/getinfo', (req, res) => getInfo(req, res, lessons))
 
 app.listen(port, host, () =>
     console.log(`Server listens http://${host}:${port}`)

@@ -1,0 +1,23 @@
+[
+  {
+    "userId": 1,
+    "name": "Эрнест",
+    "surname": "Миронов",
+    "middleName": "Арвович",
+    "coins": "1408"
+  },
+  {
+    "userId": 2,
+    "name": "Клиент",
+    "surname": "Клиентов",
+    "middleName": "Клиентович",
+    "coins": "4"
+  },
+  {
+    "userId": 3,
+    "name": "Гарри",
+    "surname": "Каспаров",
+    "middleName": "Кимович",
+    "coins": "9999"
+  }
+]

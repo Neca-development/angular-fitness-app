@@ -1,39 +1,46 @@
-<form ngNativeValidate class="auth" (submit)="logIn()">
-  <h2>Chess.com</h2>
-  <mat-form-field class="auth__input" appearance="fill">
-    <mat-label>Имя пользователя</mat-label>
-    <input
-      matInput
-      type="text"
-      class="example-right-align"
-      autocomplete
-      [(ngModel)]="login"
-      name="login"
-      required
-    />
-  </mat-form-field>
-  <mat-form-field class="auth__input" appearance="fill">
-    <mat-label>Пароль</mat-label>
-    <input
-      matInput
-      [type]="hide ? 'password' : 'text'"
-      [(ngModel)]="password"
-      autocomplete
-      required
-      name="password"
-    />
+<mat-card class="auth">
+  <form ngNativeValidate (submit)="logIn()">
+    <h2>Chess.com</h2>
+    <mat-form-field class="auth__input" appearance="fill">
+      <mat-label>Имя пользователя</mat-label>
+      <input
+        matInput
+        type="text"
+        class="example-right-align"
+        autocomplete
+        [(ngModel)]="login"
+        name="login"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="auth__input" appearance="fill">
+      <mat-label>Пароль</mat-label>
+      <input
+        matInput
+        [type]="hide ? 'password' : 'text'"
+        [(ngModel)]="password"
+        autocomplete
+        required
+        name="password"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide"
+        type="button"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+    </mat-form-field>
     <button
-      mat-icon-button
-      matSuffix
-      (click)="hide = !hide"
-      [attr.aria-label]="'Hide password'"
-      [attr.aria-pressed]="hide"
-      type="button"
+      mat-raised-button
+      color="primary"
+      type="submit"
+      class="auth__submit"
     >
-      <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      Войти
     </button>
-  </mat-form-field>
-  <button mat-raised-button color="primary" type="submit" class="auth__submit">
-    Войти
-  </button>
-</form>
+  </form>
+</mat-card>
