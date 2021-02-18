@@ -55,7 +55,8 @@ app.post('/api/auth', (req, res) => {
             return res.status(200).json({
                 id: user.id,
                 login: user.login,
-                token: jwt.sign({ id: user.id }, tokenKey),
+                role: user.role,
+                token: jwt.sign({ id: user.id, role: user.role }, tokenKey),
             })
         }
     }

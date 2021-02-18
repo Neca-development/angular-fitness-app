@@ -23,12 +23,29 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     const token = localStorage.getItem('token') || false;
-    if (token) this.openUser(jwtDecode(token));
+    if (token) this.detectUser(jwtDecode(token));
+  }
+  detectUser(user) {
+    switch (user.role) {
+      case 'user':
+        this.openUser(user);
+        break;
+      case 'admin':
+        this.openAdmin(user);
+        break;
+      default:
+        break;
+    }
   }
 
   openUser(user) {
     let userId = user.id;
     this.router.navigate([`/user/`, userId]);
+  }
+
+  openAdmin(user) {
+    let userId = user.id;
+    this.router.navigate([`/admin/`, userId]);
   }
 
   openSnackBar(message: string, action: string) {
@@ -45,7 +62,7 @@ export class AuthComponent implements OnInit {
     };
     try {
       let userData = await this.sessionService.logIn(user);
-      await this.openUser(userData);
+      await this.detectUser(userData);
     } catch (e) {
       this.openSnackBar('Логин или пароль не подходят', 'ошибка');
     }
