@@ -9,6 +9,7 @@ const express = require('express'),
     path = require('path')
 const host = '127.0.0.1'
 const port = process.env.PORT || 7000
+const { json } = require('body-parser');
 const cors = require('cors');
 
 const tokenKey = '1a2b-3c4d-5e6f-7g8h'
@@ -31,6 +32,7 @@ function getInfo(req, res, arr) {
                 else if (payload) {
                     for (let user of arr) {
                         if (user.userId === payload.id) {
+                            console.log(req.user);
                             return res.status(200).json(user)
                         }
                     }
@@ -54,7 +56,6 @@ app.post('/api/auth', (req, res) => {
         ) {
             return res.status(200).json({
                 id: user.id,
-                login: user.login,
                 role: user.role,
                 token: jwt.sign({ id: user.id, role: user.role }, tokenKey),
             })
@@ -69,6 +70,33 @@ app.get('/user/getinfo', (req, res) => getInfo(req, res, usersInfo))
 app.get('/abonemets/getinfo', (req, res) => getInfo(req, res, abonements))
 
 app.get('/lessons/getinfo', (req, res) => getInfo(req, res, lessons))
+
+app.get('/admin/getallusers', (req, res) => {
+    if (req.headers.authorization) {
+        jwt.verify(
+            req.headers.authorization,
+            tokenKey,
+            (err, payload) => {
+                if (err) {
+                    console.error(err)
+                }
+                else if (payload) {
+                    for (let user of users) {
+                        if (user.id === payload.id && user.role === 'admin') {
+                            return res.status(200).json(usersInfo)
+                        }
+                    }
+
+                    if (!req.user) console.error('err')
+                }
+            }
+        )
+    }
+    else
+        return res
+            .status(401)
+            .json({ message: 'Not authorized' })
+})
 
 app.listen(port, host, () =>
     console.log(`Server listens http://${host}:${port}`)
