@@ -14,9 +14,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthComponent } from './auth/auth.component';
 import { FormsModule } from '@angular/forms';
-import { UserComponent } from './user/user.component';
+import { UserComponent } from './user-page/user.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
-import { UserCalendarComponent } from './user-calendar/user-calendar.component';
+import { UserCalendarComponent } from './components/user-calendar/user-calendar.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { UserCalendarComponent } from './user-calendar/user-calendar.component';
     AuthComponent,
     UserComponent,
     UserCalendarComponent,
+    AdminPageComponent,
   ],
   imports: [
     BrowserModule,

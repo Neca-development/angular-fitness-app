@@ -28,7 +28,7 @@ export class AuthComponent implements OnInit {
 
   openUser(user) {
     let userId = user.id;
-    this.router.navigate([`/`, userId]);
+    this.router.navigate([`/user/`, userId]);
   }
 
   openSnackBar(message: string, action: string) {

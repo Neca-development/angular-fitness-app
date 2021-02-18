@@ -3,7 +3,7 @@ import { Abonemets, UserInfo, Lessons } from '../models/models';
 import { AbonemetsService } from '../services/abonemets.service';
 import { LessonsService } from '../services/lessons.service';
 import { UserInfoService } from '../services/user-info.service';
-import { SessionService } from './../services/session.service';
+import { SessionService } from '../services/session.service';
 
 @Component({
   selector: 'app-user',

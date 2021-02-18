@@ -1,6 +1,6 @@
 import { IAngularMyDpOptions } from 'angular-mydatepicker';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { CalendarDate, Lessons } from '../models/models';
+import { CalendarDate, Lessons } from '../../models/models';
 
 @Component({
   selector: 'app-user-calendar',
@@ -48,8 +48,6 @@ export class UserCalendarComponent implements OnInit {
       date.month = elDate.getMonth() + 1;
       date.day = elDate.getDate();
 
-      console.log(el);
-      console.log(date);
       dates.push(date);
     });
 

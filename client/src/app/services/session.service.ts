@@ -3,14 +3,16 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
 import { User } from '../models/models';
+import { BaseRequestService } from './base-request.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SessionService {
+export class SessionService extends BaseRequestService {
   user: User;
 
   constructor(private router: Router) {
+    super();
     const token = localStorage.getItem('token');
     if (token) this.user = jwtDecode(token);
   }
@@ -30,23 +32,5 @@ export class SessionService {
   logOut() {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/');
-  }
-
-  async request(url, method = 'GET', data = null) {
-    const headers = {};
-    headers['authorization'] = localStorage.getItem('token') || '';
-    let body;
-    if (data) {
-      headers['Content-Type'] = 'application/json';
-      body = JSON.stringify(data);
-    }
-    const response = await fetch(`http://127.0.0.1:7000${url}`, {
-      method,
-      headers,
-      body,
-    });
-    if (response.status >= 400 && response.status <= 599)
-      throw new Error(`Http exeption code: ${response.status}`);
-    return await response.json();
   }
 }

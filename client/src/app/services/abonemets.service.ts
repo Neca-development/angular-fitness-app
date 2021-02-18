@@ -4,13 +4,15 @@ import { BaseRequestService } from './base-request.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AbonemetsService {
+export class AbonemetsService extends BaseRequestService {
   token: string = localStorage.getItem('token');
-  constructor(private baseRequest: BaseRequestService) {}
+  constructor() {
+    super();
+  }
 
   async getAbonemetsInfo() {
     try {
-      const data = await this.baseRequest.request('/abonemets/getinfo');
+      const data = await this.request('/abonemets/getinfo');
       return data;
     } catch (e) {
       return e;
