@@ -1,4 +1,4 @@
-<mat-card class="user" *ngIf="userIsActive">
+<mat-card class="user" *ngIf="lessons; else userLoading">
   <div class="user__left">
     <h1>
       {{ userInfo.surname + " " + userInfo.name + " " + userInfo.middleName }}
@@ -33,3 +33,6 @@
     <app-user-calendar [lessons]="lessons"></app-user-calendar>
   </div>
 </mat-card>
+<ng-template #userLoading>
+  <mat-spinner></mat-spinner>
+</ng-template>

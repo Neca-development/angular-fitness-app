@@ -7,6 +7,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -39,6 +41,8 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
     MatProgressBarModule,
     MatCardModule,
     MatListModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
     AngularMyDatePickerModule,
     FormsModule,
   ],
