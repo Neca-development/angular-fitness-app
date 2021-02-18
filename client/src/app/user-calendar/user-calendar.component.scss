@@ -1,0 +1,15 @@
+.user-calendar {
+  .user-calendar {
+    &__good-date {
+      background-color: #1ac71a;
+      color: #fff;
+    }
+    &__normal-date {
+      background-color: #d0d0d0;
+    }
+    &__warn-date {
+      background-color: #f54545;
+      color: #fff;
+    }
+  }
+}
