@@ -1,6 +1,6 @@
 import { IAngularMyDpOptions } from 'angular-mydatepicker';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { CalendarDate, Lessons } from '../../models/models';
+import { CalendarDate, Lesson } from '../../models/models';
 
 @Component({
   selector: 'app-user-calendar',
@@ -14,8 +14,8 @@ export class UserCalendarComponent implements OnInit {
 
   myDatePickerOptions: IAngularMyDpOptions;
 
-  @Input() lessons: Lessons;
-  ngOnInit(): void {
+  @Input() lessons: Lesson;
+  ngOnInit() {
     this.myDatePickerOptions = {
       dateRange: false,
       inline: true,

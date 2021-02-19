@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Abonemets, UserInfo, Lessons } from '../models/models';
+import { Abonemets, UserInfo, Lesson } from '../models/models';
 import { AbonemetsService } from '../services/abonemets.service';
 import { LessonsService } from '../services/lessons.service';
 import { UserInfoService } from '../services/user-info.service';
@@ -15,7 +15,7 @@ export class UserComponent implements OnInit {
   userIsActive: boolean = false;
   userInfo: UserInfo;
   abonemets: Abonemets;
-  lessons: Lessons;
+  lessons: Lesson[];
   abonementsVal: number;
   progressColor: string = 'primary';
 

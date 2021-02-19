@@ -20,7 +20,7 @@ import { UserComponent } from './user-page/user.component';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { UserCalendarComponent } from './components/user-calendar/user-calendar.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +33,7 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -43,6 +44,7 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
     MatListModule,
     MatTableModule,
     MatProgressSpinnerModule,
+    MatTableModule,
     AngularMyDatePickerModule,
     FormsModule,
   ],

@@ -6,11 +6,14 @@ const express = require('express'),
     abonements = require('./data/abonements'),
     lessons = require('./data/lessons'),
     usersInfo = require('./data/usersInfo'),
-    path = require('path')
+    auth = require('./api/auth.service')
+userService = require('./api/user.service')
+path = require('path')
 const host = '127.0.0.1'
 const port = process.env.PORT || 7000
 const { json } = require('body-parser');
 const cors = require('cors');
+const { find } = require('lodash');
 
 const tokenKey = '1a2b-3c4d-5e6f-7g8h'
 
@@ -20,82 +23,41 @@ app.use(cors())
 app.use(bodyParser.json())
 
 
-function getInfo(req, res, arr) {
-    if (req.headers.authorization) {
-        jwt.verify(
-            req.headers.authorization,
-            tokenKey,
-            (err, payload) => {
-                if (err) {
-                    console.error(err)
-                }
-                else if (payload) {
-                    for (let user of arr) {
-                        if (user.userId === payload.id) {
-                            console.log(req.user);
-                            return res.status(200).json(user)
-                        }
-                    }
-
-                    if (!req.user) console.error('err')
-                }
-            }
-        )
-    }
+app.post('/api/login', (req, res) => {
+    const user = find(users, (user) => req.body.login === user.login && req.body.password === user.password)
+    if (user)
+        return res.status(200).json({
+            id: user.id,
+            role: user.role,
+            token: jwt.sign({ id: user.id, role: user.role }, tokenKey),
+        })
     else
-        return res
-            .status(401)
-            .json({ message: 'Not authorized' })
-}
-
-app.post('/api/auth', (req, res) => {
-    for (let user of users) {
-        if (
-            req.body.login === user.login &&
-            req.body.password === user.password
-        ) {
-            return res.status(200).json({
-                id: user.id,
-                role: user.role,
-                token: jwt.sign({ id: user.id, role: user.role }, tokenKey),
-            })
-        }
-    }
-
-    return res.status(404).json({ message: 'Пользователь не найден' })
+        return res.status(404).json({ error: 'Пользователь не найден' })
 })
 
-app.get('/user/getinfo', (req, res) => getInfo(req, res, usersInfo))
+// app.use('/user', userService)
+app.get('/user/getinfo', (req, res) => {
+    const payload = auth(req, res)
+    const user = find(usersInfo, (user) => user.userId === payload.id)
+    user ? res.status(200).json(user) : console.error('err')
+})
 
-app.get('/abonemets/getinfo', (req, res) => getInfo(req, res, abonements))
+app.get('/abonemets/getinfo', (req, res) => {
+    const payload = auth(req, res)
+    const abonement = find(abonements, (user) => user.userId === payload.id)
+    abonement ? res.status(200).json(abonement) : console.error('err')
+})
 
-app.get('/lessons/getinfo', (req, res) => getInfo(req, res, lessons))
+app.get('/lessons/getinfo', (req, res) => {
+    const payload = auth(req, res)
+    const user = find(lessons, (user) => user.userId === payload.id)
+    user ? res.status(200).json(user) : console.error('err')
+})
 
 app.get('/admin/getallusers', (req, res) => {
-    if (req.headers.authorization) {
-        jwt.verify(
-            req.headers.authorization,
-            tokenKey,
-            (err, payload) => {
-                if (err) {
-                    console.error(err)
-                }
-                else if (payload) {
-                    for (let user of users) {
-                        if (user.id === payload.id && user.role === 'admin') {
-                            return res.status(200).json(usersInfo)
-                        }
-                    }
-
-                    if (!req.user) console.error('err')
-                }
-            }
-        )
-    }
-    else
-        return res
-            .status(401)
-            .json({ message: 'Not authorized' })
+    const payload = auth(req, res)
+    const user = find(users, (user) => user.id === payload.id)
+    user.role === 'admin' ? res.status(200).json(usersInfo) : console.error('err')
 })
 
 app.listen(port, host, () =>

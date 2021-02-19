@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionService } from '../services/session.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import jwtDecode from 'jwt-decode';
 
 @Component({
@@ -11,11 +10,7 @@ import jwtDecode from 'jwt-decode';
   providers: [SessionService],
 })
 export class AuthComponent implements OnInit {
-  constructor(
-    private sessionService: SessionService,
-    private router: Router,
-    private _snackBar: MatSnackBar
-  ) {}
+  constructor(private sessionService: SessionService, private router: Router) {}
 
   hide: boolean = true;
   login: string;
@@ -48,13 +43,6 @@ export class AuthComponent implements OnInit {
     this.router.navigate([`/admin/`, userId]);
   }
 
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 2000,
-      verticalPosition: 'top',
-    });
-  }
-
   async logIn() {
     const user = {
       login: this.login,
@@ -63,8 +51,6 @@ export class AuthComponent implements OnInit {
     try {
       let userData = await this.sessionService.logIn(user);
       await this.detectUser(userData);
-    } catch (e) {
-      this.openSnackBar('Логин или пароль не подходят', 'ошибка');
-    }
+    } catch (e) {}
   }
 }

@@ -19,14 +19,10 @@ export interface Abonemets {
 }
 
 export interface Lesson {
-  [index: number]: string;
-}
-
-export interface Lessons {
   userId: number;
-  visited: Lesson;
-  missing: Lesson;
-  comming: Lesson;
+  visited: [index: number];
+  missing: [index: number];
+  comming: [index: number];
 }
 
 export interface CalendarDate {
@@ -37,4 +33,9 @@ export interface CalendarDate {
 
 export interface CalendarDatesList {
   [index: number]: CalendarDate;
+}
+
+export interface IAPIResponse<T> {
+  data: T;
+  error: string;
 }
