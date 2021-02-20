@@ -18,11 +18,15 @@ export class SessionService extends BaseRequestService {
     super(_snackBar, http);
   }
 
+  userData: User;
+  token: string = localStorage.getItem('token') || '';
+
   async logIn(user) {
     try {
       const data = await this.request('/api/login', 'POST', user);
       localStorage.setItem('token', data.token);
-      console.log(data);
+      this.token = data.token;
+      this.userData = data;
       return data;
     } catch (e) {
       console.log(e);
@@ -33,5 +37,10 @@ export class SessionService extends BaseRequestService {
   logOut() {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/');
+  }
+
+  isAuthrized() {
+    if (this.token) return this.token;
+    return false;
   }
 }
