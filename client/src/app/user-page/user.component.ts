@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Abonemets, UserInfo, Lesson } from '../models/models';
-import { AbonemetsService } from '../services/abonemets.service';
+import { Abonements, UserInfo, Lesson } from '../models/models';
+import { AbonementsService } from '../services/abonements.service';
 import { LessonsService } from '../services/lessons.service';
 import { UserInfoService } from '../services/user-info.service';
 import { SessionService } from '../services/session.service';
@@ -14,7 +14,7 @@ import { SessionService } from '../services/session.service';
 export class UserComponent implements OnInit {
   userIsActive: boolean = false;
   userInfo: UserInfo;
-  abonemets: Abonemets;
+  abonements: Abonements;
   lessons: Lesson[];
   abonementsVal: number;
   progressColor: string = 'primary';
@@ -22,16 +22,16 @@ export class UserComponent implements OnInit {
   constructor(
     private userInfoService: UserInfoService,
     private sessionService: SessionService,
-    private abonemetsService: AbonemetsService,
+    private abonementsService: AbonementsService,
     private lessonsService: LessonsService
   ) {}
 
   async ngOnInit() {
     this.userInfo = await this.userInfoService.getUserInfo();
-    this.abonemets = await this.abonemetsService.getAbonemetsInfo();
+    this.abonements = await this.abonementsService.getAbonementsInfo();
     this.lessons = await this.lessonsService.getLessonsInfo();
     this.userIsActive = true;
-    this.calcAbonemetsVal();
+    this.calcAbonementsVal();
   }
 
   logOut() {
@@ -39,9 +39,9 @@ export class UserComponent implements OnInit {
   }
 
   // Считает знаечение прогресс-бара
-  calcAbonemetsVal() {
-    const startDate = new Date(this.abonemets.startDate),
-      endDate = new Date(this.abonemets.endDate),
+  calcAbonementsVal() {
+    const startDate = new Date(this.abonements.startDate),
+      endDate = new Date(this.abonements.endDate),
       today = new Date(),
       // Максимальное количество дней
       max = Math.floor((+endDate - +startDate) / 86400000),

@@ -5,7 +5,7 @@ const express = require('express'),
 
 
 router.get('/user/info', (req, res) => (req, res) => {
-    const payload = auth(req, res)
+    const payload = auth.checkAuth()
     const user = find(usersInfo, (user) => user.userId === payload.id)
     user ? res.status(200).json(user) : console.error('err')
 })

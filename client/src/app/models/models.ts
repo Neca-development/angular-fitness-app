@@ -12,7 +12,7 @@ export interface UserInfo {
   coins: string;
 }
 
-export interface Abonemets {
+export interface Abonements {
   userId: number;
   startDate: string;
   endDate: string;
@@ -36,6 +36,7 @@ export interface CalendarDatesList {
 }
 
 export interface IAPIResponse<T> {
-  data: T;
-  error: string;
+  data?: T;
+  error?: string;
+  status: any;
 }

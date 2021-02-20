@@ -21,39 +21,29 @@ export class BaseRequestService {
       body = JSON.stringify(data);
     }
 
-    // let response: any = {};
-    // const response = await fetch(environment.serverUrl + url, {
-    //   method,
-    //   headers,
-    //   body,
-    // });
-
     let response: any;
 
-    this.http
-      .request(method, environment.serverUrl + url, {
-        headers,
-        body,
-      })
-      .subscribe(
-        (resp) => {
-          console.log(resp);
-          response = resp;
-        },
-        (error) => {
-          throw error;
-        }
-      );
+    try {
+      await this.http
+        .request(method, environment.serverUrl + url, {
+          headers,
+          body,
+        })
+        .toPromise()
+        .then((data: Response) => (response = data))
+        .catch((error) => {
+          if (error.status >= 400 && error.status <= 599) {
+            const message =
+              error['error']['errorMessage'] || 'На сервере возникли неполадки';
+            this.openSnackBar(message, 'ошибка');
+          }
+          throw new Error(JSON.stringify(error));
+        });
 
-    if (response.status >= 400 && response.status <= 599) {
-      try {
-        const message = await response['error'];
-        await this.openSnackBar(message, 'ошибка');
-      } catch {}
-      throw new Error(`Http exeption code: ${response.status}`);
+      return response;
+    } catch (error) {
+      throw error;
     }
-
-    return await response;
   }
 
   openSnackBar(message: string, action: string) {

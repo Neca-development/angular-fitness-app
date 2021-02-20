@@ -7,15 +7,15 @@ import { User } from '../models/models';
 @Injectable({
   providedIn: 'root',
 })
-export class AbonemetsService extends BaseRequestService {
+export class AbonementsService extends BaseRequestService {
   token: string = localStorage.getItem('token');
   constructor(public _snackBar: MatSnackBar, public http: HttpClient) {
     super(_snackBar, http);
   }
 
-  async getAbonemetsInfo() {
+  async getAbonementsInfo() {
     try {
-      const data = await this.request('/abonemets/getinfo');
+      const data = await this.request('/abonements/getinfo');
       return data;
     } catch (e) {
       return e;
