@@ -1,9 +1,9 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/models';
 import { BaseRequestService } from './base-request.service';
+import jwtDecode from 'jwt-decode';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
@@ -18,14 +18,14 @@ export class SessionService extends BaseRequestService {
     super(_snackBar, http);
   }
 
-  userData: User;
-  token: string = localStorage.getItem('token') || '';
+  userData = {
+    token: localStorage.getItem('token') || '',
+  };
 
   async logIn(user) {
     try {
       const data = await this.request('/api/login', 'POST', user);
       localStorage.setItem('token', data.token);
-      this.token = data.token;
       this.userData = data;
       return data;
     } catch (e) {
@@ -39,8 +39,9 @@ export class SessionService extends BaseRequestService {
     this.router.navigateByUrl('/');
   }
 
-  isAuthrized() {
-    if (this.token) return this.token;
+  isAuthroized() {
+    console.log(this.userData);
+    if (this.userData.token) return jwtDecode(this.userData.token);
     return false;
   }
 }

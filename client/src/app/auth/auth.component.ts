@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionService } from '../services/session.service';
-import jwtDecode from 'jwt-decode';
 
 @Component({
   selector: 'app-auth',
@@ -16,10 +15,7 @@ export class AuthComponent implements OnInit {
   login: string;
   password: string;
 
-  ngOnInit(): void {
-    const token = localStorage.getItem('token') || false;
-    if (token) this.detectUser(jwtDecode(token));
-  }
+  ngOnInit(): void {}
   detectUser(user) {
     switch (user.role) {
       case 'user':
@@ -50,7 +46,7 @@ export class AuthComponent implements OnInit {
     };
     try {
       let userData = await this.sessionService.logIn(user);
-      await this.detectUser(userData);
+      this.detectUser(userData);
     } catch (e) {}
   }
 }
