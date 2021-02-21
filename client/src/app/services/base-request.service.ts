@@ -1,54 +1,59 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { environment } from './../../environments/environment';
+import { IAPIResponse } from '../models/models';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class BaseRequestService {
-  constructor(public _snackBar: MatSnackBar, public http: HttpClient) {}
+    constructor(public _snackBar: MatSnackBar, public http: HttpClient) {}
 
-  async request(url, method = 'GET', data = null) {
-    const headers = {};
-    let body;
 
-    headers['authorization'] = localStorage.getItem('token') || '';
-
-    if (data) {
-      headers['Content-Type'] = 'application/json';
-      body = JSON.stringify(data);
+    get<T>(url : string): Promise<T> {
+        return this.request(url, "GET");
     }
 
-    let response: any;
+    post<T>(url: string, data : any): Promise<T> {
+        return this.request(url, "POST", data);
+    }
 
-    try {
-      await this.http
-        .request(method, environment.serverUrl + url, {
-          headers,
-          body,
-        })
-        .toPromise()
-        .then((data: Response) => (response = data))
-        .catch((error) => {
-          if (error.status >= 400 && error.status <= 599) {
-            const message =
-              error['error']['errorMessage'] || 'На сервере возникли неполадки';
-            this.openSnackBar(message, 'ошибка');
-          }
-          throw new Error(JSON.stringify(error));
+    //TODO should be private
+    async request<T>(url, method : "GET" | "POST" = "GET", data = null): Promise<T> {
+        let body;
+
+        const headers = {
+            authorization : localStorage.getItem('token') || ''
+        };
+
+        if (data) {
+            headers['Content-Type'] = 'application/json';
+            body = JSON.stringify(data);
+        }
+        try {
+            const response = await this.http.request<IAPIResponse<T>>(method, environment.serverUrl + url, { headers, body}).toPromise();
+            return response.data;
+        }
+        catch (e) {
+            const errorObject = e as HttpErrorResponse;
+            const errorData = errorObject.error as IAPIResponse<any>;
+            if (errorData != null && errorData.errorMessage != null && errorData.errorMessage != "" ) {
+               this.openSnackBar(errorData.errorMessage, 'ошибка'); 
+            } else {
+               this.openSnackBar(errorObject.message, 'ошибка'); 
+            }
+
+            throw e;
+            
+        }
+    }
+
+    private openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action, {
+            duration: 2000,
+            verticalPosition: 'top',
         });
-
-      return response;
-    } catch (error) {
-      throw error;
     }
-  }
-
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 2000,
-      verticalPosition: 'top',
-    });
-  }
 }

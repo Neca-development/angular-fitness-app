@@ -29,6 +29,7 @@ export class UserComponent implements OnInit {
   async ngOnInit() {
     this.userInfo = await this.userInfoService.getUserInfo();
     this.abonements = await this.abonementsService.getAbonementsInfo();
+    
     this.lessons = await this.lessonsService.getLessonsInfo();
     this.userIsActive = true;
     this.calcAbonementsVal();

@@ -14,7 +14,7 @@ export class AdminInfoService extends BaseRequestService {
   }
 
   async getAllUsersInfo() {
-    try {
+    try { //TODO: remove try/catch
       const data = await this.request('/admin/getallusers');
       console.log(data);
       return data;

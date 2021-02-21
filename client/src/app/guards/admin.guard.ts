@@ -21,7 +21,7 @@ export class AdminGuard implements CanActivate {
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
-    | UrlTree {
+    | UrlTree { //чтоета?)0
     const data = this.sessionService.isAuthroized();
     // if (data.role === 'admin') {
     console.log(data);

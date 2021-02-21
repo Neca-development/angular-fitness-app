@@ -8,14 +8,13 @@ import { SessionService } from '../services/session.service';
   styleUrls: ['./auth.component.scss'],
   providers: [SessionService],
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent {
   constructor(private sessionService: SessionService, private router: Router) {}
 
   hide: boolean = true;
   login: string;
   password: string;
 
-  ngOnInit(): void {}
   detectUser(user) {
     switch (user.role) {
       case 'user':
@@ -44,9 +43,8 @@ export class AuthComponent implements OnInit {
       login: this.login,
       password: this.password,
     };
-    try {
-      let userData = await this.sessionService.logIn(user);
-      this.detectUser(userData);
-    } catch (e) {}
+    
+    let userData = await this.sessionService.logIn(user);
+    this.detectUser(userData);
   }
 }

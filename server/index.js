@@ -33,9 +33,11 @@ app.post('/api/login', (req, res) => {
     const user = users.find((user) => req.body.login === user.login && req.body.password === user.password)
     if (user)
         return res.status(200).json({
-            id: user.id,
-            role: user.role,
-            token: jwt.sign({ id: user.id, role: user.role }, tokenKey),
+            data: {
+                id: user.id,
+                role: user.role,
+                token: jwt.sign({ id: user.id, role: user.role }, tokenKey),
+            }
         })
     else
         return res.status(404).json({ errorMessage: 'Пользователь не найден' })

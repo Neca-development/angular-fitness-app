@@ -23,6 +23,6 @@ export class UserGuard implements CanActivate {
     | boolean
     | UrlTree {
     console.log(this.sessionService.isAuthroized());
-    return !!this.sessionService.isAuthroized();
+    return this.sessionService.isAuthroized();
   }
 }

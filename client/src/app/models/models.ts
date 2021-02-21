@@ -4,6 +4,12 @@ export interface User {
   password: string;
 }
 
+export interface IAuthorizedUser {
+  id: number;
+  role: string;
+  token: string;
+}
+
 export interface UserInfo {
   userId: number;
   name: string;
@@ -37,6 +43,6 @@ export interface CalendarDatesList {
 
 export interface IAPIResponse<T> {
   data?: T;
-  error?: string;
+  errorMessage?: string;
   status: any;
 }
