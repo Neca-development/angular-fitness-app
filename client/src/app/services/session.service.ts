@@ -10,38 +10,41 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root',
 })
 export class SessionService extends BaseRequestService {
-    constructor(
-        private router: Router,
-        public _snackBar: MatSnackBar,
-        public http: HttpClient
-    ) {
-        super(_snackBar, http);
+  constructor(
+    private router: Router,
+    public _snackBar: MatSnackBar,
+    public http: HttpClient
+  ) {
+    super(_snackBar, http);
+  }
+
+  userJwtData?: any;
+
+  init() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this.userJwtData = jwtDecode(token);
     }
+  }
 
-    userJwtData? : any;
+  async logIn(user): Promise<any> {
+    const data = await this.post<IAuthorizedUser>('/api/login', user);
+    localStorage.setItem('token', data.token);
+    this.userJwtData = jwtDecode(data.token);
+    console.log(this.userJwtData);
+    return this.userJwtData;
+  }
 
-    init(){
-        const token = localStorage.getItem('token');
+  logOut() {
+    localStorage.removeItem('token');
+    console.log('logOut');
+    this.userJwtData = '';
+    this.router.navigateByUrl('/');
+  }
 
-        if (token) {
-            this.userJwtData = jwtDecode(token);
-        }
-    }
-
-    async logIn(user) : Promise<any> {
-        const data = await this.post<IAuthorizedUser>('/api/login', user);
-        localStorage.setItem('token', data.token);
-        this.userJwtData = jwtDecode(data.token);
-        return this.userJwtData;
-    }
-
-    logOut() {
-        localStorage.removeItem('token');
-        this.userJwtData = null;
-        this.router.navigateByUrl('/');
-    }
-
-    isAuthroized():boolean {
-        return this.userJwtData != null;
-    }
+  isAuthroized(): boolean {
+    console.log(this.userJwtData);
+    return this.userJwtData != null;
+  }
 }

@@ -3,14 +3,7 @@ import { SessionService } from './../services/session.service';
 import { AdminInfoService } from './../services/admin-info.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
-interface User {
-  id: number;
-  name: string;
-  surname: string;
-  middleName: string;
-  coins: number;
-}
+import { UserInfo } from '../models/models';
 
 @Component({
   selector: 'app-admin-page',
@@ -18,7 +11,7 @@ interface User {
   styleUrls: ['./admin-page.component.scss'],
 })
 export class AdminPageComponent implements OnInit, AfterViewInit {
-  users: User[] = [];
+  users: UserInfo[] = [];
   displayedColumns: string[] = ['id', 'name', 'coins'];
   dataSource = new MatTableDataSource(this.users);
   @ViewChild(MatSort) sort: MatSort;

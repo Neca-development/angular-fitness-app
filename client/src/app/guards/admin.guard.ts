@@ -4,6 +4,7 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   UrlTree,
+  Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SessionService } from '../services/session.service';
@@ -12,7 +13,7 @@ import { SessionService } from '../services/session.service';
   providedIn: 'root',
 })
 export class AdminGuard implements CanActivate {
-  constructor(public sessionService: SessionService) {}
+  constructor(public sessionService: SessionService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -21,11 +22,12 @@ export class AdminGuard implements CanActivate {
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
-    | UrlTree { //чтоета?)0
-    const data = this.sessionService.isAuthroized();
-    // if (data.role === 'admin') {
-    console.log(data);
-    return true;
-    // }
+    | UrlTree {
+    //чтоета?)0
+    if (!this.sessionService.isAuthroized()) {
+      return this.router.parseUrl('/');
+    } else {
+      return true;
+    }
   }
 }

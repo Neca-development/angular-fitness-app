@@ -29,13 +29,11 @@ export class AuthComponent {
   }
 
   openUser(user) {
-    let userId = user.id;
-    this.router.navigate([`/user/`, userId]);
+    this.router.navigate([`/user/`, user.id]);
   }
 
   openAdmin(user) {
-    let userId = user.id;
-    this.router.navigate([`/admin/`, userId]);
+    this.router.navigate([`/admin/`, user.id]);
   }
 
   async logIn() {
@@ -43,7 +41,7 @@ export class AuthComponent {
       login: this.login,
       password: this.password,
     };
-    
+
     let userData = await this.sessionService.logIn(user);
     this.detectUser(userData);
   }

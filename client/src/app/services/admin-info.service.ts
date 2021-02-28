@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseRequestService } from './base-request.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { User } from '../models/models';
+import { UserInfo } from '../models/models';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -13,13 +13,7 @@ export class AdminInfoService extends BaseRequestService {
     super(_snackBar, http);
   }
 
-  async getAllUsersInfo() {
-    try { //TODO: remove try/catch
-      const data = await this.request('/admin/getallusers');
-      console.log(data);
-      return data;
-    } catch (e) {
-      return e;
-    }
+  async getAllUsersInfo(): Promise<UserInfo[]> {
+    return await this.get<UserInfo[]>('/admin/get-all-users');
   }
 }

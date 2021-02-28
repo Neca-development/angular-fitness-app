@@ -4,6 +4,7 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   UrlTree,
+  Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SessionService } from '../services/session.service';
@@ -12,7 +13,7 @@ import { SessionService } from '../services/session.service';
   providedIn: 'root',
 })
 export class UserGuard implements CanActivate {
-  constructor(public sessionService: SessionService) {}
+  constructor(public sessionService: SessionService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -22,7 +23,11 @@ export class UserGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log(this.sessionService.isAuthroized());
-    return this.sessionService.isAuthroized();
+    if (!this.sessionService.isAuthroized()) {
+      console.log(this.sessionService.isAuthroized());
+      return this.router.parseUrl('/');
+    } else {
+      return true;
+    }
   }
 }

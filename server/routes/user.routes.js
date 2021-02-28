@@ -7,7 +7,7 @@ router.get('/getinfo', (req, res) => {
     const payload = auth.checkAuth(req, res)
     const user = usersInfo.find((user) => user.userId === payload.id)
 
-    const response = { data: user}
+    const response = { data: user }
 
     user ? res.status(200).json(response) : console.error('err')
 })
