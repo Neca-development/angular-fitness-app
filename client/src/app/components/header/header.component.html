@@ -1,0 +1,21 @@
+<header class="header" *ngIf="this.location.path() !== ''">
+  <div class="container">
+    <div class="header__logo">
+      <img src="../../../assets/img/logo.png" alt="" class="header__logo-img" />
+      <h1 class="header__logo-txt">
+        Шахматная школа <br />
+        <b>«Лидер»</b>
+      </h1>
+    </div>
+    <button
+      mat-raised-button
+      color="warn"
+      class="header__logout"
+      type="submit"
+      (click)="logOut()"
+    >
+      Выйти
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</header>

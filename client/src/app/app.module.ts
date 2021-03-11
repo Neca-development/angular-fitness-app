@@ -21,6 +21,7 @@ import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { UserCalendarComponent } from './components/user-calendar/user-calendar.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from './components/header/header.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
     UserComponent,
     UserCalendarComponent,
     AdminPageComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,47 +1,61 @@
-<mat-card class="auth">
-  <form ngNativeValidate (submit)="logIn()" action="" method="POST">
-    <h2>Chess.com</h2>
-    <mat-form-field class="auth__input" appearance="fill">
-      <mat-label>Имя пользователя</mat-label>
-      <input
-        matInput
-        type="text"
-        class="example-right-align"
-        autocomplete
-        [(ngModel)]="login"
-        name="login"
-        required
-      />
-    </mat-form-field>
-    <mat-form-field class="auth__input" appearance="fill">
-      <mat-label>Пароль</mat-label>
-      <input
-        matInput
-        [type]="hide ? 'password' : 'text'"
-        [(ngModel)]="password"
-        autocomplete
-        required
-        name="password"
-      />
-      <button
-        mat-icon-button
-        matSuffix
-        (click)="hide = !hide"
-        [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hide"
-        type="button"
-      >
-        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-      </button>
-    </mat-form-field>
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      class="auth__submit"
-    >
-      <mat-icon>login</mat-icon>
-      Войти
-    </button>
-  </form>
-</mat-card>
+<div class="auth">
+  <div class="container">
+    <mat-card class="auth__form">
+      <form ngNativeValidate (submit)="logIn()" action="" method="POST">
+        <div class="auth__logo">
+          <img
+            src="../../../assets/img/logo.png"
+            alt=""
+            class="auth__logo-img"
+          />
+          <h1 class="auth__logo-txt">
+            Шахматная школа <br />
+            <b>«Лидер»</b>
+          </h1>
+        </div>
+        <mat-form-field class="auth__input" appearance="outline">
+          <mat-label>Имя пользователя</mat-label>
+          <input
+            matInput
+            type="text"
+            class="example-right-align"
+            autocomplete
+            [(ngModel)]="login"
+            name="login"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field class="auth__input" appearance="outline">
+          <mat-label>Пароль</mat-label>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            [(ngModel)]="password"
+            autocomplete
+            required
+            name="password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+            type="button"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="auth__submit"
+        >
+          <!-- <mat-icon>login</mat-icon> -->
+          Войти
+        </button>
+      </form>
+    </mat-card>
+  </div>
+</div>

@@ -21,7 +21,6 @@ export class UserComponent implements OnInit {
 
   constructor(
     private userInfoService: UserInfoService,
-    private sessionService: SessionService,
     private abonementsService: AbonementsService,
     private lessonsService: LessonsService
   ) {}
@@ -29,14 +28,10 @@ export class UserComponent implements OnInit {
   async ngOnInit() {
     this.userInfo = await this.userInfoService.getUserInfo();
     this.abonements = await this.abonementsService.getAbonementsInfo();
-    
+
     this.lessons = await this.lessonsService.getLessonsInfo();
     this.userIsActive = true;
     this.calcAbonementsVal();
-  }
-
-  logOut() {
-    this.sessionService.logOut();
   }
 
   // Считает знаечение прогресс-бара

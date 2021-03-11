@@ -1,11 +1,19 @@
-<mat-card class="user" *ngIf="lessons; else userLoading">
-  <div class="user__left">
-    <h1>
-      {{ userInfo.surname + " " + userInfo.name + " " + userInfo.middleName }}
-    </h1>
-    <h2>Фишки: {{ userInfo.coins }}</h2>
-    <div class="user__abonement">
-      <span><strong>Абоненмент:</strong></span>
+<div class="user">
+  <div class="container" *ngIf="lessons; else userLoading">
+    <div class="user__card user__card_xl">
+      <h2 class="user__title">
+        {{ userInfo.surname + " " + userInfo.name + " " + userInfo.middleName }}
+      </h2>
+    </div>
+    <div class="user__card user__card_s">
+      <h3 class="user__subtitle">Фишки</h3>
+      <div class="user__coins">
+        <img class="user__coins-icon" src="../../assets/img/coin.svg" alt="" />
+        {{ userInfo.coins }}
+      </div>
+    </div>
+    <div class="user__card user__card_l">
+      <h3 class="user__subtitle">Абонемент</h3>
       <mat-progress-bar
         class="user__abonement-bar"
         [value]="abonementsVal"
@@ -13,26 +21,20 @@
       >
       </mat-progress-bar>
     </div>
-    <h2>Занятия на этой неделе:</h2>
-    <mat-list>
-      <mat-list-item> Понедельник - 16:20</mat-list-item>
-      <mat-list-item> Четверг - 15:30</mat-list-item>
-      <mat-list-item> Суббота - 14:20</mat-list-item>
-    </mat-list>
-    <button
-      mat-raised-button
-      color="primary"
-      class="user__log-out"
-      type="submit"
-      (click)="logOut()"
-    >
-      Выйти
-    </button>
+    <div class="user__card user__card_m">
+      <h3 class="user__subtitle">Занятия на этой неделе</h3>
+      <ul class="user__list">
+        <li>Понедельник - 16:20</li>
+        <li>Четверг - 15:30</li>
+        <li>Суббота - 14:20</li>
+      </ul>
+    </div>
+    <div class="user__card user__card_m">
+      <h3 class="user__subtitle">Расписание занятий</h3>
+      <app-user-calendar [lessons]="lessons"></app-user-calendar>
+    </div>
   </div>
-  <div class="user__right">
-    <app-user-calendar [lessons]="lessons"></app-user-calendar>
-  </div>
-</mat-card>
-<ng-template #userLoading>
-  <mat-spinner></mat-spinner>
-</ng-template>
+  <ng-template #userLoading>
+    <mat-spinner class="user__loader"></mat-spinner>
+  </ng-template>
+</div>

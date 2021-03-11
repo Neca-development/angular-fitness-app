@@ -1,7 +1,22 @@
 .auth {
-  padding: 20px 15px;
-  width: 300px;
+  height: 100vh;
+  background-image: url("../../assets/img/auth-bg.svg");
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  .container {
+    display: grid;
+    place-content: center;
+  }
 
+  &__title {
+    font-size: 24px;
+  }
+  &__form {
+    padding: 30px 30px 50px;
+    width: 350px;
+    box-shadow: 0px 5px 30px 5px #1f1f1f;
+    font-size: 16px;
+  }
   &__input {
     display: block;
   }
@@ -9,5 +24,39 @@
   &__submit {
     margin-left: auto;
     display: block;
+    width: 100%;
+    font-size: 20px;
+    padding: 8px;
+    box-shadow: 0 5px 0 0 #357737, 0 2px 4px 1px rgba(0, 0, 0, 0.2);
+    font-weight: 800;
+    letter-spacing: 2px;
+    border-radius: 10px;
+    transition: all ease 0.2s;
+
+    &.mat-raised-button:not(.mat-button-disabled):active:not([class*="mat-elevation-z"]) {
+      box-shadow: 0 0 0 0 #357737;
+      transform: translateY(5px);
+    }
+  }
+  &__logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  &__logo-img {
+    max-height: 70px;
+  }
+  &__logo-txt {
+    margin: 0;
+    margin-left: 20px;
+    max-width: 400px;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.3;
+
+    b {
+      font-weight: 400;
+      font-size: 1.3em;
+    }
   }
 }
